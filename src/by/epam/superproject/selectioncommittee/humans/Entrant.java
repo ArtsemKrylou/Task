@@ -4,7 +4,7 @@ import by.epam.superproject.selectioncommittee.Faculty;
 
 import java.util.Objects;
 
-public class Student {
+public class Entrant {
 
    private String name;
    private Faculty faculty;
@@ -21,11 +21,11 @@ public class Student {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Student)) return false;
-        Student student = (Student) o;
-        return Objects.equals(name, student.name) &&
-                Objects.equals(faculty, student.faculty) &&
-                Objects.equals(certificate, student.certificate);
+        if (!(o instanceof Entrant)) return false;
+        Entrant entrant = (Entrant) o;
+        return Objects.equals(name, entrant.name) &&
+                Objects.equals(faculty, entrant.faculty) &&
+                Objects.equals(certificate, entrant.certificate);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "Entrant{" +
                 "name='" + name + '\'' +
                 ", faculty=" + faculty +
                 ", certificate=" + certificate +
