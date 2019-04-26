@@ -11,6 +11,7 @@ public class Subject {
 
     private String name;
     private int mark;
+    private long id;
 
     public String getName() {
         return name;
@@ -24,6 +25,14 @@ public class Subject {
         return mark;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public void setMark(int mark) {
         this.mark = mark;
     }
@@ -33,13 +42,14 @@ public class Subject {
         if (this == o) return true;
         if (!(o instanceof Subject)) return false;
         Subject subject = (Subject) o;
-        return mark == subject.mark &&
-                Objects.equals(name, subject.name);
+        return getMark() == subject.getMark() &&
+                getId() == subject.getId() &&
+                Objects.equals(getName(), subject.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, mark);
+        return Objects.hash(getName(), getMark(), getId());
     }
 
     @Override
@@ -47,6 +57,7 @@ public class Subject {
         return "Subject{" +
                 "name='" + name + '\'' +
                 ", mark=" + mark +
+                ", id=" + id +
                 '}';
     }
 }
