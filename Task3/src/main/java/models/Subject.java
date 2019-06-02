@@ -13,6 +13,20 @@ public class Subject {
     private int mark;
     private long id;
 
+    public Subject() {
+    }
+
+    public Subject(String name, int mark, long id) {
+        this.name = name;
+        this.mark = mark;
+        this.id = id;
+    }
+
+    public Subject(String name, int mark) {
+        this.name = name;
+        this.mark = mark;
+    }
+
     public String getName() {
         return name;
     }
@@ -28,6 +42,8 @@ public class Subject {
     public long getId() {
         return id;
     }
+
+
 
     public void setId(long id) {
         this.id = id;
