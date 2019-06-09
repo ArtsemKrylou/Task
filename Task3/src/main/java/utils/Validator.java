@@ -8,7 +8,7 @@ public class Validator {
     if (subject.getName() == null){
         throw new ValidationException("name not null");
     }
-    if (subject.getName().length() > 0){
+    if (subject.getName().trim().length() == 0){
         throw new ValidationException("name should not be empty");
     }
 
