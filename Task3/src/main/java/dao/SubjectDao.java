@@ -12,8 +12,10 @@ public class SubjectDao implements Dao<Subject> {
     private static final String SELECT_ALL = "SELECT * FROM task2.subject";
     private static final String UPDATE = "update task2.subject set name = ?, mark = ? where id = ?";
     private static final String DELETE = "delete from subject where id = ?";
-    private static final String CREATE = "insert into subject(name, mark) VALUES (?, ?)";
+    private static final String CREATE = "insert into subject(name, mark, entrant_id) VALUES (?, ?, ?)";
     private static final String SELECT_BY_ID = "SELECT * FROM task2.subject WHERE id = ?";
+    private static final String SELECT_LAST = " SELECT * FROM subject HAVING id = (SELECT MAX(id) FROM subject)";
+
 
     public SubjectDao(ExecutorService executor) {
         this.executor = executor;
@@ -41,7 +43,8 @@ public class SubjectDao implements Dao<Subject> {
     }
 
     @Override
-    public void create(Subject entity) {
-        executor.executorUpdate(CREATE, entity.getName(), entity.getMark());
+    public Subject create(Subject entity) {
+        executor.executorUpdate(CREATE, entity.getName(), entity.getMark(),entity.getId());
+        return executor.executorSelect(SELECT_LAST, new SubjectMapper());
     }
 }

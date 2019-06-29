@@ -11,5 +11,5 @@ public interface Dao<T> {
 
     void delete(Long id);
 
-    void create(T entity);
+    T create(T entity);
 }

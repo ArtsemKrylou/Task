@@ -1,19 +1,41 @@
 package models;
 
 
-import java.util.List;
 import java.util.Objects;
 
 public class Certificate {
+    private int mark;
+    private long id;
 
-    private List <Subject> subjects;
 
-    public List<Subject> getSubjects() {
-        return subjects;
+    public Certificate() {
     }
 
-    public void setSubjects(List<Subject> subjects) {
-        this.subjects = subjects;
+    public Certificate(int mark, long id) {
+        this.mark = mark;
+        this.id = id;
+    }
+
+    public Certificate(int mark) {
+        this.mark = mark;
+    }
+
+
+
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override
@@ -21,18 +43,19 @@ public class Certificate {
         if (this == o) return true;
         if (!(o instanceof Certificate)) return false;
         Certificate that = (Certificate) o;
-        return Objects.equals(subjects, that.subjects);
+        return getMark() == that.getMark() &&
+                getId() == that.getId();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(subjects);
+        return Objects.hash(getMark(), getId());
     }
 
     @Override
     public String toString() {
-        return "Certificate{" +
-                "subjects=" + subjects +
+        return "Certificate{mark=" + mark +
+                ", id=" + id +
                 '}';
     }
 }
