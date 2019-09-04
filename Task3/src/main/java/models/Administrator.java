@@ -1,32 +1,23 @@
 package models;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Administrator {
 
-    private String name;
     private long id;
+    private User user;
 
-    @Override
-    public String toString() {
-        return "Administrator{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                '}';
+    public Administrator() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Administrator)) return false;
-        Administrator that = (Administrator) o;
-        return getId() == that.getId() &&
-                Objects.equals(getName(), that.getName());
+    public Administrator(long id, User user) {
+        this.id = id;
+        this.user = user;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getId());
+    public Administrator(User user) {
+        this.user = user;
     }
 
     public long getId() {
@@ -37,12 +28,33 @@ public class Administrator {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public User getUser() {
+        return user;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUser(User user) {
+        this.user = user;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Administrator)) return false;
+        Administrator that = (Administrator) o;
+        return getId() == that.getId() &&
+                Objects.equals(getUser(), that.getUser());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUser());
+    }
+
+    @Override
+    public String toString() {
+        return "Administrator{" +
+                "id=" + id +
+                ", user=" + user +
+                '}';
+    }
 }

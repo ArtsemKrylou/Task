@@ -10,13 +10,13 @@ public class EntrantDao implements Dao<Entrant> {
 
     private ExecutorService executor;
 
-    private static final String SELECT_ALL = "SELECT entrant.id, entrant.name, certificate.mark, GROUP_CONCAT( subject.name) AS subject_name, GROUP_CONCAT( subject.mark) AS subject_mark, certificate.id AS certificate_id, GROUP_CONCAT(subject.id) AS subject_id FROM entrant\n" +
+    private static final String SELECT_ALL = "SELECT entrant.id, entrant.name, GROUP_CONCAT( certificate.id) AS certificate_id, certificate.mark, GROUP_CONCAT( subject.name) AS subject_name, GROUP_CONCAT( subject.mark) AS subject_mark, GROUP_CONCAT(subject.id) AS subject_id FROM entrant\n" +
             "INNER JOIN certificate ON entrant.id = certificate.entrant_id\n" +
             "INNER JOIN subject ON entrant.id = subject.entrant_id group by entrant.id";
     private static final String UPDATE = "update task2.entrant set name = ? where id = ?";
     private static final String DELETE = "delete from entrant where id = ?";
     private static final String CREATE = "insert into entrant(name) VALUES (?)";
-    private static final String SELECT_BY_ID = "SELECT entrant.id, entrant.name, certificate.mark, GROUP_CONCAT( subject.name) AS subject_name, GROUP_CONCAT( subject.mark) AS subject_mark FROM entrant\n" +
+    private static final String SELECT_BY_ID = "SELECT entrant.id, entrant.name, GROUP_CONCAT( certificate.id) AS certificate_id, certificate.mark, GROUP_CONCAT( subject.name) AS subject_name, GROUP_CONCAT( subject.mark) AS subject_mark, GROUP_CONCAT(subject.id) AS subject_id FROM entrant\n" +
             "INNER JOIN certificate ON entrant.id = certificate.entrant_id\n" +
             "INNER JOIN subject ON entrant.id = subject.entrant_id WHERE entrant.id = ? group by entrant.id";
     private static final String SELECT_LAST = " SELECT * FROM entrant HAVING id = (SELECT MAX(id) FROM entrant)";

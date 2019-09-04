@@ -14,7 +14,7 @@ public class AdministratorDao implements Dao<Administrator> {
     private static final String UPDATE = "update task2.administrator set name = ? where id = ?";
     private static final String DELETE = "delete from administrator where id = ?";
     private static final String CREATE = "insert into administrator(name) VALUES (?)";
-    private static final String SELECT_BY_ID = "SELECT * FROM task2.administrator WHERE id = ?";
+    private static final String SELECT_BY_ID = "SELECT * FROM task2.administrator WHERE user_id = ?";
     private static final String SELECT_LAST = " SELECT * FROM administrator HAVING id = (SELECT MAX(id) FROM administrator)";
 
     public AdministratorDao(ExecutorService executor) {
@@ -26,7 +26,7 @@ public class AdministratorDao implements Dao<Administrator> {
 
     @Override
     public void update(Administrator administrator) {
-        executor.executorUpdate(UPDATE, administrator.getName(), administrator.getId());
+        executor.executorUpdate(UPDATE, administrator.getId());
 
     }
 
@@ -40,7 +40,7 @@ public class AdministratorDao implements Dao<Administrator> {
 
     @Override
     public Administrator create(Administrator entity) {
-        executor.executorUpdate(CREATE, entity.getName());
+        executor.executorUpdate(CREATE);
         return executor.executorSelect(SELECT_LAST, new AdministratorMapper());
     }
 }

@@ -11,9 +11,9 @@ public class UserDao implements Dao<User> {
     private ExecutorService executor;
 
     private static final String SELECT_ALL = "SELECT * FROM task2.user";
-    private static final String UPDATE = "update task2.user set name = ?, password = ? where id = ?";
+    private static final String UPDATE = "update task2.user set username = ?, password = ? where id = ?";
     private static final String DELETE = "delete from user where id = ?";
-    private static final String CREATE = "insert into user(name, password) VALUES (?, ?)";
+    private static final String CREATE = "insert into user(username, password, entrant_id) VALUES (?, ?, ?)";
     private static final String SELECT_BY_ID = "SELECT * FROM task2.user WHERE id = ?";
     private static final String SELECT_BY_USERNAME = "SELECT * FROM task2.user WHERE username = ?";
     private static final String SELECT_LAST = " SELECT * FROM user HAVING id = (SELECT MAX(id) FROM user)";
@@ -45,7 +45,7 @@ public class UserDao implements Dao<User> {
 
     @Override
     public User create(User entity) {
-        executor.executorUpdate(CREATE, entity.getUserName(), entity.getPassword(), entity.getId());
+        executor.executorUpdate(CREATE, entity.getUserName(), entity.getPassword(), entity.getEntrant().getId());
         return executor.executorSelect(SELECT_LAST,new UserMapper());
 
     }

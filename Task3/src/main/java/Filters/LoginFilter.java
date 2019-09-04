@@ -1,5 +1,8 @@
 package Filters;
 
+import models.User;
+import service.AdministratorService;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -13,20 +16,25 @@ import java.util.Set;
 @WebFilter(urlPatterns = "/*")
 public class LoginFilter implements Filter {
 
-    private static final Set<String> EXCLUDED_PATHS = new HashSet<>(Arrays.asList("/login"));
+    private AdministratorService administratorService;
+
+    private static final Set<String> EXCLUDED_PATHS = new HashSet<>(Arrays.asList("/login", "/registration"));
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest)servletRequest;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String path = request.getRequestURI().substring(request.getContextPath().length()).replaceAll("[/]+$", "");
         HttpSession session = request.getSession();
-        Object user = session.getAttribute("user");
-        if (user == null && !EXCLUDED_PATHS.contains(path)){
-            response.sendRedirect(request.getContextPath()+ "/login");
-        }else {
+        User user = (User) session.getAttribute("user");
+        if (user == null && !EXCLUDED_PATHS.contains(path)) {
+            response.sendRedirect("/login");
+        } else {
+
             filterChain.doFilter(request, response);
         }
+
+
 //        if (!EXCLUDED_PATHS.contains(path)) {
 //
 //
@@ -43,6 +51,8 @@ public class LoginFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+
+        administratorService = new AdministratorService();
 
     }
 

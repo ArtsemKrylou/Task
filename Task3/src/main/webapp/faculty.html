@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body onload="if (location.href.indexOf('reload')===-1) {location.replace(location.href+'?reload')}">
+
+<form action="/statement" method="get">
+    <input type="submit" value="calculate">
+</form>
+<form action="logout" method="get">
+    <input type="submit" value="logout">
+</form>
+
+<script>
+    window.onload = function () {
+        getFacultyInfo();
+    };
+
+    function createCell(value) {
+        var cell = document.createElement("td");
+        cell.innerHTML = value;
+        return cell;
+    }
+
+    function header(table, headers) {
+        var headerRow = document.createElement("tr");
+        for (var i in headers){
+            headerRow.appendChild(createCell(headers[i]));
+        }
+        table.appendChild(headerRow)
+    }
+
+    function checkStatus(entrant_id, row) {
+        var xhr = new XMLHttpRequest();
+        var body = {
+            selector : "status", entrant_id : entrant_id.toString()
+        }
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200){
+                var arr = JSON.parse(xhr.responseText);
+                var result = arr.status? "passed" : "not passed";
+                row.appendChild(createCell(result));
+                console.log(arr)
+
+            }
+        }
+        xhr.open('post', 'updateInfo', true);
+        xhr.send(JSON.stringify(body));
+
+    }
+
+    function getFacultyInfo() {
+        var xhr = new XMLHttpRequest();
+        var body = {
+            selector: "faculty"
+        }
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var arr = JSON.parse(xhr.responseText);
+                engineering = document.getElementById("engineering_table");
+                //engineering.innerHTML = arr.entrant.name;
+                var arrayLength = arr.length;
+                for (var i = 0; i < arrayLength; i++) {
+                    var table = document.createElement("table");
+                    table.setAttribute("border", "1");
+                    var faculty = arr[i];
+                    header(table, [faculty.name, "Passed or not"]);
+
+
+                    for (var key in faculty.entrants) {
+                        var entrant = faculty.entrants[key];
+                        var row = document.createElement("tr");
+                        var data = document.createElement("td");
+
+                        data.innerHTML = entrant.name;
+                        row.appendChild(data);
+
+                        checkStatus(entrant.id, row)
+                        console.log(entrant.name);
+                        table.appendChild(row);
+                    }
+                    document.body.appendChild(table);
+                }
+
+            }
+        }
+        xhr.open('post', 'updateInfo', true);
+        xhr.send(JSON.stringify(body));
+    }
+</script>
+</body>
+</html>

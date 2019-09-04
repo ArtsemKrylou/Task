@@ -18,6 +18,11 @@ public class Faculty {
         this.id = id;
     }
 
+    public Faculty(String name, List<Entrant> entrants) {
+        this.name = name;
+        this.entrants = entrants;
+    }
+
     public String getName() {
         return name;
     }
@@ -41,6 +46,7 @@ public class Faculty {
     public void setId(long id) {
         this.id = id;
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -8,12 +8,57 @@
 <div id="username">
 
 </div>
+<div id="status">
+
+</div>
+<table border="1">
+
+<tr>
+    <td>Certificate</td>
+
+</tr>
+<tr>
+    <td id="certificate_mark"></td>
+</tr>
+</table>
+<table id="subject_table" border="1">
+<tr>
+    <td> Name </td>
+    <td> Mark </td>
+</tr>
+</table>
 <form action="logout" method="get">
     <input type="submit" value="logout">
 </form>
 <script> window.onload = function () {
     getUserInfo();
 };
+
+function createCell(value) {
+    var cell = document.createElement("td");
+    cell.innerHTML = value;
+    return cell;
+
+}
+
+function checkStatus(entrant_id) {
+    var xhr = new XMLHttpRequest();
+    var body = {
+        selector : "status", entrant_id : entrant_id.toString()
+    }
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200){
+            var arr = JSON.parse(xhr.responseText);
+            var result = arr.status? "passed" : "not passed";
+            document.getElementById("status").innerHTML = result;
+            console.log(arr)
+
+        }
+    }
+    xhr.open('post', 'updateInfo', true);
+    xhr.send(JSON.stringify(body));
+
+}
 
 function getUserInfo() {
 
@@ -24,9 +69,27 @@ function getUserInfo() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
 
-           var username = document.getElementById("username");
+            var username = document.getElementById("username");
+            var cert_mark =  document.getElementById("certificate_mark");
             var arr = JSON.parse(xhr.responseText);
-           username.innerHTML = arr.userName;
+            console.log(arr);
+            username.innerHTML = arr.userName;
+            cert_mark.innerHTML = arr.entrant.certificate.mark;
+            checkStatus(arr.entrant.id);
+            subj_table = document.getElementById("subject_table");
+            console.log(arr.entrant.subjects);
+            for (var key in arr.entrant.subjects) {
+                console.log(arr.entrant.subjects[key]);
+                var subject = arr.entrant.subjects[key];
+                var row = document.createElement("tr");
+                var data = document.createElement("td");
+                data.innerHTML = subject.name;
+                row.appendChild(data);
+                var data1 = document.createElement("td");
+                data1.innerHTML= subject.mark;
+                row.appendChild(data1);
+                subj_table.appendChild(row);
+            }
         }
     };
 

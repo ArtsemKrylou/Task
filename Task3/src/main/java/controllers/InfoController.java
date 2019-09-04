@@ -1,8 +1,12 @@
 package controllers;
 
 import com.google.gson.Gson;
+import models.Faculty;
+import models.Statement;
 import models.Subject;
 import models.User;
+import service.FacultyService;
+import service.StatementService;
 import service.SubjectService;
 
 import javax.servlet.ServletException;
@@ -15,17 +19,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
 
 @WebServlet("/updateInfo")
 public class InfoController extends HttpServlet {
 
     private SubjectService subjectService;
+    private StatementService statementService;
+    //private BufferedReader br;
 
     @Override
     public void init() {
         subjectService = new SubjectService();
+        statementService = new StatementService();
     }
 
     @Override
@@ -42,18 +51,38 @@ public class InfoController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String selector = readSelector(req);
+        Map<String, String> selectors = readSelector(req);
+        String selector = selectors.getOrDefault("selector", "");
         switch (selector){
             case "user":
                 User user = getUserInfo(req);
                 writeInfo(resp, user);
                 break;
+            case "faculty":
+                List<Faculty> faculty = getFacultyInfo();
+                writeInfo(resp, faculty);
+                break;
+            case "status":
+                long entrant_id = Long.parseLong(selectors.get("entrant_id"));
+                Map<String, Boolean> status = Collections.singletonMap("status", checkStatus(entrant_id));
+                writeInfo(resp, status);
+                break;
         }
+    }
+
+    private boolean checkStatus(Long id){
+        Statement statement = statementService.getStatementById(id);
+        return !statement.getEntrants().isEmpty();
     }
 
     private User getUserInfo(HttpServletRequest request){
         HttpSession session = request.getSession();
         return (User) session.getAttribute("user");
+    }
+
+    private List<Faculty> getFacultyInfo(){
+        FacultyService facultyService = new FacultyService();
+        return facultyService.getFaculty();
     }
 
     private void writeInfo(HttpServletResponse response, Object object) throws IOException {
@@ -65,13 +94,15 @@ public class InfoController extends HttpServlet {
         out.flush();
     }
 
-    private String readSelector(HttpServletRequest request) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+    private  Map<String, String> readSelector(HttpServletRequest request) throws IOException {
+
+           BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+
         String json = "";
         if(br != null){
             json = br.readLine();
-            return new Gson().fromJson(json, Map.class).getOrDefault("selector","").toString();
+            return new Gson().fromJson(json, Map.class);
         }
-        return json;
+        return null;
     }
 }

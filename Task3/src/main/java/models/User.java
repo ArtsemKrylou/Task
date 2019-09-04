@@ -9,11 +9,21 @@ public class User {
     private long id;
     private String userName;
     private String password;
+    private Entrant entrant;
 
-    public User(long id, String userName, String password) {
+
+
+    public User(long id, String userName, String password, Entrant entrant) {
         this.id = id;
         this.userName = userName;
         this.password = password;
+        this.entrant = entrant;
+    }
+
+    public User(String userName, String password, Entrant entrant) {
+        this.userName = userName;
+        this.password = password;
+        this.entrant = entrant;
     }
 
     public User(String userName, String password) {
@@ -48,6 +58,15 @@ public class User {
         this.password = password;
     }
 
+    public Entrant getEntrant() {
+        return entrant;
+    }
+
+    public void setEntrant(Entrant entrant) {
+        this.entrant = entrant;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,12 +74,13 @@ public class User {
         User user = (User) o;
         return getId() == user.getId() &&
                 Objects.equals(getUserName(), user.getUserName()) &&
-                Objects.equals(getPassword(), user.getPassword());
+                Objects.equals(getPassword(), user.getPassword()) &&
+                Objects.equals(getEntrant(), user.getEntrant());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUserName(), getPassword());
+        return Objects.hash(getId(), getUserName(), getPassword(), getEntrant());
     }
 
     @Override
@@ -69,6 +89,7 @@ public class User {
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
+                ", entrant=" + entrant +
                 '}';
     }
 }

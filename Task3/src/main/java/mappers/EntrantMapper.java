@@ -58,7 +58,7 @@ public class EntrantMapper implements Mapper<Entrant> {
         String[] ids = idString.split(",");
         if (marks.length == names.length){
            return Stream.iterate(0, integer -> integer + 1)
-                    .limit(marks.length - 1)
+                    .limit(marks.length)
                     .map(integer -> {
                        String name = names[integer];
                        int mark = Integer.parseInt(marks[integer]);

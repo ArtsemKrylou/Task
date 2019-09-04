@@ -30,6 +30,7 @@ public class LoginController extends HttpServlet {
         String password = req.getParameter("password");
         User user = new User(username, password);
         if(userService.getUserByName(user)){
+            System.out.println(user);
             req.getSession().setAttribute("user", user);
             resp.sendRedirect("home");
         }else {
