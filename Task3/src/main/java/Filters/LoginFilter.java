@@ -35,18 +35,7 @@ public class LoginFilter implements Filter {
         }
 
 
-//        if (!EXCLUDED_PATHS.contains(path)) {
-//
-//
-//            System.out.println(request.getRequestURI());
-//            if (user != null) {
-//                filterChain.doFilter(servletRequest, servletResponse);
-//            } else {
-//                response.sendRedirect("/login");
-//            }
-//        }else {
-//            response.sendRedirect(request.getContextPath()+ path);
-//        }
+
     }
 
     @Override

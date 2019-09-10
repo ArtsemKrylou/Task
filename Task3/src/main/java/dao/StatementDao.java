@@ -3,19 +3,21 @@ package dao;
 import mappers.StatementMapper;
 import models.Statement;
 import service.ExecutorService;
+import utils.PropertyReader;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 public class StatementDao implements Dao<Statement> {
-
+    private static Properties properties = PropertyReader.readProperty();
     private ExecutorService executor;
 
-    private static final String SELECT_ALL = "SELECT statement.id, GROUP_CONCAT(entrant_id) AS entrant_id FROM task2.statement";
-    private static final String CREATE = "insert into statement(entrant_id) VALUES (?)";
-    private static final String DELETE = "delete from statement";
-    private static final String SELECT_BY_ID = "SELECT * FROM task2.statement WHERE entrant_id = ?";
-    private static final String SELECT_LAST = " SELECT * FROM statement HAVING id = (SELECT MAX(id) FROM statement)";
+    private static final String SELECT_ALL = properties.getProperty("statementDao.selectAll");
+    private static final String CREATE = properties.getProperty("statementDao.create");
+    private static final String DELETE = properties.getProperty("statementDao.delete");
+    private static final String SELECT_BY_ID = properties.getProperty("statementDao.selectById");
+    private static final String SELECT_LAST = properties.getProperty("statementDao.selectLast");
 
     public StatementDao (ExecutorService executor) {this.executor = executor;}
 

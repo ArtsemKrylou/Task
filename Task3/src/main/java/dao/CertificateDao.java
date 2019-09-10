@@ -3,18 +3,21 @@ package dao;
 import mappers.CertificateMapper;
 import models.Certificate;
 import service.ExecutorService;
+import utils.PropertyReader;
 
 import java.util.List;
+import java.util.Properties;
 
 public class CertificateDao implements Dao<Certificate> {
+   private static Properties properties = PropertyReader.readProperty();
    private ExecutorService executor;
 
-    private static final String SELECT_ALL = "SELECT * FROM task2.certificate";
-    private static final String UPDATE = "update task2.certificate set mark = ? where id = ?";
-    private static final String DELETE = "delete from certificate where id = ?";
-    private static final String CREATE = "insert into certificate(mark, entrant_id) VALUES (?, (SELECT id FROM entrant WHERE entrant.id = ?))";
-    private static final String SELECT_BY_ID = "SELECT * FROM task2.certificate WHERE entrant_id = ?";
-    private static final String SELECT_LAST = " SELECT * FROM certificate HAVING id = (SELECT MAX(id) FROM certificate)";
+    private static final String SELECT_ALL = properties.getProperty("certificateDao.selectAll");
+    private static final String UPDATE = properties.getProperty("certificateDao.update");
+    private static final String DELETE = properties.getProperty("certificateDao.delete");
+    private static final String CREATE = properties.getProperty("certificateDao.create");
+    private static final String SELECT_BY_ID = properties.getProperty("certificateDao.selectById");
+    private static final String SELECT_LAST = properties.getProperty("certificateDao.selectLast");
 
     public CertificateDao(ExecutorService executor) {
         this.executor = executor;

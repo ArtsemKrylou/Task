@@ -3,18 +3,21 @@ package dao;
 import mappers.SubjectMapper;
 import models.Subject;
 import service.ExecutorService;
+import utils.PropertyReader;
 
 import java.util.List;
+import java.util.Properties;
 
 public class SubjectDao implements Dao<Subject> {
+    private static Properties properties = PropertyReader.readProperty();
     private ExecutorService executor;
 
-    private static final String SELECT_ALL = "SELECT * FROM task2.subject";
-    private static final String UPDATE = "update task2.subject set name = ?, mark = ? where id = ?";
-    private static final String DELETE = "delete from subject where id = ?";
-    private static final String CREATE = "insert into subject(name, mark, entrant_id) VALUES (?, ?, ?)";
-    private static final String SELECT_BY_ID = "SELECT * FROM task2.subject WHERE id = ?";
-    private static final String SELECT_LAST = " SELECT * FROM subject HAVING id = (SELECT MAX(id) FROM subject)";
+    private static final String SELECT_ALL = properties.getProperty("subjectDao.selectAll");
+    private static final String UPDATE = properties.getProperty("subjectDao.update");
+    private static final String DELETE = properties.getProperty("subjectDao.delete");
+    private static final String CREATE = properties.getProperty("subjectDao.create");
+    private static final String SELECT_BY_ID = properties.getProperty("subjectDao.selectById");
+    private static final String SELECT_LAST = properties.getProperty("subjectDao.selectLast");
 
 
     public SubjectDao(ExecutorService executor) {

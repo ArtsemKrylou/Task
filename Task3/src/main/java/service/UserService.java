@@ -29,7 +29,6 @@ public class UserService {
 
     public User createUser(User user){
         Entrant entrant = entrantService.createEntrant(user.getEntrant());
-        //facultyService.createFaculty();
         user.setEntrant(entrant);
         if (validateUser(user)){
            return userDao.create(user);

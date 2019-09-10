@@ -21,7 +21,6 @@ public class SubjectController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Subject> subjects = subjectService.getSubjects();
         req.setAttribute("subjects", subjects);
-        //req.getRequestDispatcher("index.jsp").forward(req, resp);
         req.getRequestDispatcher("test.html").forward(req, resp);
     }
 
@@ -47,7 +46,6 @@ public class SubjectController extends HttpServlet {
         Gson gson = new Gson();
         Subject subject = gson.fromJson(req.getReader(), Subject.class);
         subjectService.deleteSubject(subject.getId());
-        //resp.sendRedirect("subjects");
     }
 
     @Override

@@ -3,20 +3,22 @@ package dao;
 import mappers.UserMapper;
 import models.User;
 import service.ExecutorService;
+import utils.PropertyReader;
 
 import java.util.List;
+import java.util.Properties;
 
 public class UserDao implements Dao<User> {
-
+    private static Properties properties = PropertyReader.readProperty();
     private ExecutorService executor;
 
-    private static final String SELECT_ALL = "SELECT * FROM task2.user";
-    private static final String UPDATE = "update task2.user set username = ?, password = ? where id = ?";
-    private static final String DELETE = "delete from user where id = ?";
-    private static final String CREATE = "insert into user(username, password, entrant_id) VALUES (?, ?, ?)";
-    private static final String SELECT_BY_ID = "SELECT * FROM task2.user WHERE id = ?";
-    private static final String SELECT_BY_USERNAME = "SELECT * FROM task2.user WHERE username = ?";
-    private static final String SELECT_LAST = " SELECT * FROM user HAVING id = (SELECT MAX(id) FROM user)";
+    private static final String SELECT_ALL = properties.getProperty("userDao.selectAll");
+    private static final String UPDATE = properties.getProperty("userDao.update");
+    private static final String DELETE = properties.getProperty("userDao.delete");
+    private static final String CREATE = properties.getProperty("userDao.create");
+    private static final String SELECT_BY_ID = properties.getProperty("userDao.selectById");
+    private static final String SELECT_BY_USERNAME = properties.getProperty("userDao.selectByUserName");
+    private static final String SELECT_LAST = properties.getProperty("userDao.selectLast");
 
     public UserDao(ExecutorService executor) {
         this.executor = executor;

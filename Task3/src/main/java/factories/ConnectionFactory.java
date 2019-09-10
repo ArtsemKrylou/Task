@@ -1,23 +1,28 @@
 package factories;
 
+import org.apache.log4j.Logger;
+import utils.PropertyReader;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ConnectionFactory {
+
+   private final  static Logger logger = Logger.getLogger(ConnectionFactory.class);
     private Connection connection;
     private static ConnectionFactory instance;
     private ConnectionFactory(){
-
+        Properties properties = PropertyReader.readProperty();
 
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             connection = DriverManager
-                    .getConnection("jdbc:mysql://localhost:3306/task2","root", "password");
+                    .getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"),properties.getProperty("db.password"));
 
         } catch (SQLException e) {
-            e.printStackTrace();
-
+            logger.warn(e.getMessage());
         }
 
     }

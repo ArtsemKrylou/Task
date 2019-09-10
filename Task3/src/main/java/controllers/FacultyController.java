@@ -16,12 +16,7 @@ import java.util.List;
 @WebServlet(urlPatterns = "/facult")
 public class FacultyController extends HttpServlet {
 
-    private FacultyService facultyService;
 
-    @Override
-    public void init(){
-        facultyService = new FacultyService();
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

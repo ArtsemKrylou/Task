@@ -39,14 +39,7 @@ public class InfoController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-//        List<Subject> subjects = subjectService.getSubjects();
-//        Gson gson = new Gson();
-//        gson.toJson(subjects);
-//        PrintWriter out = resp.getWriter();
-//        resp.setContentType("application/json");
-//        resp.setCharacterEncoding("UTF-8");
-//        out.print(gson.toJson(subjects));
-//        out.flush();
+
     }
 
     @Override

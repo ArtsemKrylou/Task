@@ -3,8 +3,6 @@ package models;
 import java.util.Objects;
 
 public class User {
-    //сервлет
-    //модель, дао(+запрос поиск по юзернэйму), сервис(+метод ищет юзера по логину и сравнивает пароли возвращает true или false), маппер
 
     private long id;
     private String userName;

@@ -63,18 +63,7 @@
 
 <script>
     function create() {
-        // $.ajax({
-        //     url: 'subjects',
-        //     type: "post",
-        //     data: {
-        //         name: $('#new_name').val(),
-        //         mark: $('#new_mark').val()
-        //
-        //     },
-        //     success: function (responseText) {
-        //         location.reload();
-        //     }
-        // });
+
         var xhr = new XMLHttpRequest();
 
         xhr.open('post', 'subjects', false);
@@ -117,18 +106,7 @@
                 location.reload();
             }
         }
-        // $.ajax({
-        //     url: 'subjects',
-        //     type: "put",
-        //     data: {
-        //         name: name,
-        //         mark: mark,
-        //         id: id
-        //     },
-        //     success: function (responseText) {
-        //         location.reload();
-        //     }
-        // });
+
 
     }
 

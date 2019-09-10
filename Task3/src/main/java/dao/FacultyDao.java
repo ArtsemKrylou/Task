@@ -3,19 +3,22 @@ package dao;
 import mappers.FacultyMapper;
 import models.Faculty;
 import service.ExecutorService;
+import utils.PropertyReader;
 
 import java.util.List;
+import java.util.Properties;
 
 public class FacultyDao implements Dao<Faculty> {
+    private static Properties properties = PropertyReader.readProperty();
     private ExecutorService executor;
 
-    private static final String SELECT_ALL = "SELECT faculty.id, faculty.name, GROUP_CONCAT(entrant_id) AS entrant_id FROM task2.faculty GROUP BY faculty.name";
-    private static final String UPDATE = "update task2.faculty set name = ?, where id = ?";
-    private static final String DELETE = "delete from faculty where id = ?";
-    private static final String CREATE = "insert into faculty(name, entrant_id) VALUES (?, ?)";
-    private static final String SELECT_BY_ID = "SELECT * FROM task2.faculty WHERE id = ?";
-    private static final String SELECT_BY_NAME = "SELECT faculty.id, faculty.name, GROUP_CONCAT(entrant_id) AS entrant_id FROM task2.faculty  WHERE name = ?";
-    private static final String SELECT_LAST = " SELECT * FROM faculty HAVING id = (SELECT MAX(id) FROM faculty)";
+    private static final String SELECT_ALL = properties.getProperty("facultyDao.selectAll");
+    private static final String UPDATE = properties.getProperty("facultyDao.update");
+    private static final String DELETE = properties.getProperty("facultyDao.delete");
+    private static final String CREATE = properties.getProperty("facultyDao.create");
+    private static final String SELECT_BY_ID = properties.getProperty("facultyDao.selectById");
+    private static final String SELECT_BY_NAME = properties.getProperty("facultyDao.selectByName");
+    private static final String SELECT_LAST = properties.getProperty("facultyDao.selectLast");
 
     public FacultyDao (ExecutorService executor) {this.executor = executor;}
 

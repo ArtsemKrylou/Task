@@ -1,6 +1,8 @@
 package controllers;
 
+import factories.ConnectionFactory;
 import models.User;
+import org.apache.log4j.Logger;
 import service.UserService;
 
 import javax.servlet.ServletException;
@@ -13,6 +15,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/login")
 public class LoginController extends HttpServlet {
     private UserService userService;
+    private final Logger logger = Logger.getLogger(LoginController.class);
 
     @Override
     public void init() {
@@ -30,7 +33,7 @@ public class LoginController extends HttpServlet {
         String password = req.getParameter("password");
         User user = new User(username, password);
         if(userService.getUserByName(user)){
-            System.out.println(user);
+            logger.debug(user);
             req.getSession().setAttribute("user", user);
             resp.sendRedirect("home");
         }else {

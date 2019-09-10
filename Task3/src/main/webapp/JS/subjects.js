@@ -43,18 +43,7 @@ function redrawTable() {
 }
 
 function create() {
-    // $.ajax({
-    //     url: 'subjects',
-    //     type: "post",
-    //     data: {
-    //         name: $('#new_name').val(),
-    //         mark: $('#new_mark').val()
-    //
-    //     },
-    //     success: function (responseText) {
-    //         location.reload();
-    //     }
-    // });
+
     var xhr = new XMLHttpRequest();
 
     xhr.open('post', 'subjects', true);
@@ -75,12 +64,6 @@ function create() {
     if (validate(name, mark)) {
         xhr.send(JSON.stringify(body));
 
-        // if (xhr.status != 200) {
-        //     console.log(xhr.status + ': ' + xhr.statusText);
-        // } else {
-        //     console.log(xhr.responseText);
-        //     location.reload();
-        // }
     }
 }
 
@@ -107,18 +90,7 @@ function update(id) {
         xhr.send(JSON.stringify(body));
 
     }
-    // $.ajax({
-    //     url: 'subjects',
-    //     type: "put",
-    //     data: {
-    //         name: name,
-    //         mark: mark,
-    //         id: id
-    //     },
-    //     success: function (responseText) {
-    //         location.reload();
-    //     }
-    // });
+
 
 }
 

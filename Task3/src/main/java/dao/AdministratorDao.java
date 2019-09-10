@@ -3,19 +3,21 @@ package dao;
 import mappers.AdministratorMapper;
 import models.Administrator;
 import service.ExecutorService;
+import utils.PropertyReader;
 
 import java.util.List;
+import java.util.Properties;
 
 public class AdministratorDao implements Dao<Administrator> {
-
+    private static Properties properties = PropertyReader.readProperty();
     private ExecutorService executor;
 
-    private static final String SELECT_ALL = "SELECT * FROM task2.administrator";
-    private static final String UPDATE = "update task2.administrator set name = ? where id = ?";
-    private static final String DELETE = "delete from administrator where id = ?";
-    private static final String CREATE = "insert into administrator(name) VALUES (?)";
-    private static final String SELECT_BY_ID = "SELECT * FROM task2.administrator WHERE user_id = ?";
-    private static final String SELECT_LAST = " SELECT * FROM administrator HAVING id = (SELECT MAX(id) FROM administrator)";
+    private static final String SELECT_ALL = properties.getProperty("administratorDao.selectAll");
+    private static final String UPDATE = properties.getProperty("administratorDao.update");
+    private static final String DELETE = properties.getProperty("administratorDao.delete");
+    private static final String CREATE = properties.getProperty("administratorDao.create");
+    private static final String SELECT_BY_ID = properties.getProperty("administratorDao.selectById");
+    private static final String SELECT_LAST = properties.getProperty("administratorDao.selectLast");
 
     public AdministratorDao(ExecutorService executor) {
         this.executor = executor;

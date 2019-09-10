@@ -4,22 +4,21 @@ import mappers.EntrantMapper;
 import models.Entrant;
 
 import java.util.List;
+import java.util.Properties;
+
 import service.ExecutorService;
+import utils.PropertyReader;
 
 public class EntrantDao implements Dao<Entrant> {
-
+    private static Properties properties = PropertyReader.readProperty();
     private ExecutorService executor;
 
-    private static final String SELECT_ALL = "SELECT entrant.id, entrant.name, GROUP_CONCAT( certificate.id) AS certificate_id, certificate.mark, GROUP_CONCAT( subject.name) AS subject_name, GROUP_CONCAT( subject.mark) AS subject_mark, GROUP_CONCAT(subject.id) AS subject_id FROM entrant\n" +
-            "INNER JOIN certificate ON entrant.id = certificate.entrant_id\n" +
-            "INNER JOIN subject ON entrant.id = subject.entrant_id group by entrant.id";
-    private static final String UPDATE = "update task2.entrant set name = ? where id = ?";
-    private static final String DELETE = "delete from entrant where id = ?";
-    private static final String CREATE = "insert into entrant(name) VALUES (?)";
-    private static final String SELECT_BY_ID = "SELECT entrant.id, entrant.name, GROUP_CONCAT( certificate.id) AS certificate_id, certificate.mark, GROUP_CONCAT( subject.name) AS subject_name, GROUP_CONCAT( subject.mark) AS subject_mark, GROUP_CONCAT(subject.id) AS subject_id FROM entrant\n" +
-            "INNER JOIN certificate ON entrant.id = certificate.entrant_id\n" +
-            "INNER JOIN subject ON entrant.id = subject.entrant_id WHERE entrant.id = ? group by entrant.id";
-    private static final String SELECT_LAST = " SELECT * FROM entrant HAVING id = (SELECT MAX(id) FROM entrant)";
+    private static final String SELECT_ALL = properties.getProperty("entrantDao.selectAll");
+    private static final String UPDATE = properties.getProperty("entrantDao.update");
+    private static final String DELETE = properties.getProperty("entrantDao.delete");
+    private static final String CREATE = properties.getProperty("entrantDao.create");
+    private static final String SELECT_BY_ID = properties.getProperty("entrantDao.selectById");
+    private static final String SELECT_LAST = properties.getProperty("entrantDao.selectLast");
     public EntrantDao(ExecutorService executor) {
         this.executor = executor;
     }
